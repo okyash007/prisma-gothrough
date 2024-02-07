@@ -62,6 +62,17 @@ async function todosAndSubTodos(userId: number) {
   console.log(allTodos);
 }
 
+async function updateUser(userId: number, email: string, fullname: string) {
+  const res = await prisma.user.update({
+    where: { id: userId },
+    data: {
+      fullname,
+      email,
+    },
+  });
+  console.log(res);
+}
+
 // insertUser("hello2@gmail.com", "yash@7122000", "Yash Verma", "8006679475");
 // addTodo("Todo1", "Todo description 1", 4);
 // addSubTodo("SubTodo1", "subTodo description 1", 1, 4);
