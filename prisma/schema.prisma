@@ -1,0 +1,32 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://okyash007:n9saZlE1dpPx@ep-mute-sun-a12rn3ln.ap-southeast-1.aws.neon.tech/post22?sslmode=require"
+}
+
+model User {
+  id          Int     @id @default(autoincrement())
+  email       String  @unique
+  fullname    String
+  password    String
+  todos       Todos[]
+  phoneNumber String  @unique @db.VarChar(10)
+}
+
+model Todos {
+  id           Int     @id @default(autoincrement())
+  isDone       Boolean @default(false)
+  title        String
+  description  String
+  userId       Int
+  User         User    @relation(fields: [userId], references: [id])
+  subTodos     Todos[] @relation("subTodo")
+  Todos        Todos?  @relation("subTodo", fields: [parentTodoId], references: [id])
+  parentTodoId Int?
+}
